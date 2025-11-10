@@ -12,7 +12,7 @@ namespace Database.PostgreSql.Providers
 
         }
 
-        protected string GetConnectionString()
+        protected virtual string GetConnectionString()
         {
             return string.Empty;
         }

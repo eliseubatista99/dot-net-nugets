@@ -1,17 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-	  <Version>2.1.0</Version>
-	  <IsPackable>true</IsPackable>
-    <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-	  <PackageId>database-postgresql</PackageId>
-	  <Title>Database - PostgreSql</Title>
-	  <Authors>eliseubatista99</Authors>
-	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	  <PackageReadmeFile>README.md</PackageReadmeFile>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Version>0.0.6</Version>
+		<IsPackable>true</IsPackable>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PackageId>database-postgresql</PackageId>
+		<Title>Database - PostgreSql</Title>
+		<Authors>eliseubatista99</Authors>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
 		<PackageReference Include="Npgsql" Version="9.0.3" />
