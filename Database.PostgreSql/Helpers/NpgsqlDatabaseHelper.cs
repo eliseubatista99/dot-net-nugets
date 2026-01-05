@@ -23,28 +23,32 @@ namespace Database.PostgreSql.Helpers
             return (transaction, command);
         }
 
-        public static string? ReadColumnValue(NpgsqlDataReader sqlReader, string columnName)
+        public static T? ReadColumnValue<T>(NpgsqlDataReader reader, string columnName)
         {
-            var value = sqlReader[columnName];
+            int ordinal = reader.GetOrdinal(columnName);
 
-            if (value is DBNull)
+            if (reader.IsDBNull(ordinal))
+                return default;  // retorna null para classes ou Nullable<T> para structs
+
+            // If byte[] or other reference
+            if (typeof(T) == typeof(byte[]))
             {
-                return null;
+                return (T)(object)reader.GetFieldValue<byte[]>(ordinal);
             }
 
-            return value.ToString();
+            // If string
+            if (typeof(T) == typeof(string))
+            {
+                return (T)(object)reader.GetString(ordinal);
+            }
+
+            // If structs/values
+            return reader.GetFieldValue<T>(ordinal);
         }
 
-        public static T? ReadColumnValue<T>(NpgsqlDataReader sqlReader, string columnName) where T : struct
+        public static string? ReadColumnValue(NpgsqlDataReader sqlReader, string columnName)
         {
-            var value = sqlReader[columnName];
-
-            if (value is DBNull)
-            {
-                return null;
-            }
-
-            return (T)value;
+            return ReadColumnValue<string>(sqlReader, columnName);
         }
 
         public static string FormatDate(DateTime date)

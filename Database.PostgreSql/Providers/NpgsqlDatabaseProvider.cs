@@ -1,15 +1,18 @@
 ﻿using Database.PostgreSql.Helpers;
 using Npgsql;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Configuration;
 
 namespace Database.PostgreSql.Providers
 {
     [ExcludeFromCodeCoverage]
     public class NpgsqlDatabaseProvider<T>
     {
-        public NpgsqlDatabaseProvider()
-        {
+        protected IConfiguration _configuration { get; }
 
+        public NpgsqlDatabaseProvider(IConfiguration configuration)
+        {
+            _configuration = configuration;
         }
 
         protected virtual string GetConnectionString()
