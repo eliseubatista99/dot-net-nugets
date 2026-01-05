@@ -1,4 +1,5 @@
-﻿using Npgsql;
+﻿using Database.PostgreSql.Models;
+using Npgsql;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Database.PostgreSql.Helpers
@@ -19,36 +20,9 @@ namespace Database.PostgreSql.Helpers
             command.Parameters.Clear();
             command.Connection = connection;
             command.Transaction = transaction;
+            //command.CommandText = commandText;
 
             return (transaction, command);
-        }
-
-        public static T? ReadColumnValue<T>(NpgsqlDataReader reader, string columnName)
-        {
-            int ordinal = reader.GetOrdinal(columnName);
-
-            if (reader.IsDBNull(ordinal))
-                return default;  // retorna null para classes ou Nullable<T> para structs
-
-            // If byte[] or other reference
-            if (typeof(T) == typeof(byte[]))
-            {
-                return (T)(object)reader.GetFieldValue<byte[]>(ordinal);
-            }
-
-            // If string
-            if (typeof(T) == typeof(string))
-            {
-                return (T)(object)reader.GetString(ordinal);
-            }
-
-            // If structs/values
-            return reader.GetFieldValue<T>(ordinal);
-        }
-
-        public static string? ReadColumnValue(NpgsqlDataReader sqlReader, string columnName)
-        {
-            return ReadColumnValue<string>(sqlReader, columnName);
         }
 
         public static string FormatDate(DateTime date)
@@ -59,6 +33,6 @@ namespace Database.PostgreSql.Helpers
         public static string FormatDateWithTime(DateTime date)
         {
             return date.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss");
-        }
+        }        
     }
 }

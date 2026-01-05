@@ -2,6 +2,8 @@
 using Npgsql;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
+using Database.PostgreSql.Models;
+using Database.PostgreSql.Extensions;
 
 namespace Database.PostgreSql.Providers
 {
@@ -108,6 +110,34 @@ namespace Database.PostgreSql.Providers
                     transaction.Commit();
 
                     return true;
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+        }
+
+        protected bool ExecuteInsertCommand(string tableName, TableField[] fields)
+        {
+            var connectionString = GetConnectionString();
+
+            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+            {
+                connection.Open();
+
+                var (transaction, commandExecutor) = NpgsqlDatabaseHelper.InitialzieSqlTransaction(connection);
+
+                try
+                {
+                    commandExecutor = commandExecutor.BuildInsertCommand(tableName, fields);
+
+                    var result = commandExecutor.ExecuteNonQuery();
+
+                    transaction.Commit();
+
+                    return result > 0;
                 }
                 catch (Exception)
                 {
