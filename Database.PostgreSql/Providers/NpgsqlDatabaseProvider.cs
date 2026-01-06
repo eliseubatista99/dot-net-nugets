@@ -147,6 +147,35 @@ namespace Database.PostgreSql.Providers
             }
         }
 
+        protected bool ExecuteUpdateCommand(string tableName, TableField[] fields, string condition)
+        {
+            var connectionString = GetConnectionString();
+
+            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+            {
+                connection.Open();
+
+                var (transaction, commandExecutor) = NpgsqlDatabaseHelper.InitialzieSqlTransaction(connection);
+
+                try
+                {
+                    commandExecutor = commandExecutor.BuildUpdateCommand(tableName, fields, condition);
+
+                    var result = commandExecutor.ExecuteNonQuery();
+
+                    transaction.Commit();
+
+                    return result > 0;
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+        }
+
+
         protected virtual T? GetObjectFromDataReader(NpgsqlDataReader dataReader)
         {
             return default(T);

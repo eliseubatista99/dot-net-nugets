@@ -45,5 +45,32 @@ namespace Database.PostgreSql.Extensions
 
             return command;
         }
+
+        public static NpgsqlCommand BuildUpdateCommand(this NpgsqlCommand command, string tableName, TableField[] updateFields, string condition)
+        {
+            var cmdText = $"UPDATE {tableName} SET ";
+
+            for (int i = 0; i < updateFields.Length; i++)
+            {
+                if (i > 0)
+                {
+                    cmdText += ", ";
+                }
+
+                cmdText += $"{updateFields[i].FieldName} = @{updateFields[i].FieldName}";
+            }
+
+            cmdText += $"WHERE {condition};";
+
+            command.Parameters.Clear();
+            command.CommandText = cmdText;
+
+            for (int i = 0; i < updateFields.Length; i++)
+            {
+                command.Parameters.AddWithValue(updateFields[i].FieldName, updateFields[i].DataType, updateFields[i].FieldValue ?? (object)DBNull.Value);
+            }
+
+            return command;
+        }
     }
 }
