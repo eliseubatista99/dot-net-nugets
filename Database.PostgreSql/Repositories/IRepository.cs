@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,18 +10,18 @@ namespace Database.PostgreSql.Repositories
 {
     public interface IRepository<T> where T : class
     {
-        IQueryable<T> Query(); // To build queries
+        public IQueryable<T> Query(); // To build queries
 
-        Task<T?> GetByIdAsync(string id);
+        public Task<T?> GetByIdAsync(string id);
 
-        Task<bool> AddAsync(T entity);
+        public Task<bool> AddAsync(T entity, bool saveChanges = true);
 
-        void Update(T entity);
+        public Task<bool> UpdateAsync(T entity, bool saveChanges = true);
 
-        void Delete(T entity);
+        public Task<bool> UpdateAsync(Expression<Func<T, bool>> filter, Expression<Func<SetPropertyCalls<T>, SetPropertyCalls<T>>> set, bool saveChanges = true);
 
-        public Task<int> DeleteAsync(Expression<Func<T, bool>> predicate);
+        public Task<bool> DeleteAsync(Expression<Func<T, bool>> predicate, bool saveChanges = true);
 
-        Task<int> SaveChangesAsync();
+        public Task<bool> SaveChangesAsync();
     }
 }

@@ -30,41 +30,95 @@ namespace Database.PostgreSql.Repositories
             return await _dbSet.FindAsync(id);
         }
 
-        public virtual async Task<bool> AddAsync(T entity)
+        public virtual async Task<bool> AddAsync(T entity, bool saveChanges = true)
         {
-            await _dbSet.AddAsync(entity);
-            return true;
+            try
+            {
+                await _dbSet.AddAsync(entity);
+
+                if (saveChanges)
+                {
+                    return await SaveChangesAsync();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
-        public virtual void Update(T entity)
+        public virtual async Task<bool> UpdateAsync(T entity, bool saveChanges = true)
         {
-            _dbSet.Update(entity);
+            try
+            {
+                _dbSet.Update(entity);
+
+                if (saveChanges)
+                {
+                    return await SaveChangesAsync();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
-        public Task<int> UpdateAsync(
-            Expression<Func<T, bool>> filter,
-            Expression<Func<SetPropertyCalls<T>, SetPropertyCalls<T>>> set)
+        public async Task<bool> UpdateAsync(Expression<Func<T, bool>> filter, Expression<Func<SetPropertyCalls<T>, SetPropertyCalls<T>>> set, bool saveChanges = true)
         {
-            return _dbSet
-                .Where(filter)
-                .ExecuteUpdateAsync(set);
+            try
+            {
+                await _dbSet
+                    .Where(filter)
+                    .ExecuteUpdateAsync(set);
+
+                if (saveChanges)
+                {
+                    return await SaveChangesAsync();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
-        public virtual void Delete(T entity)
+        public virtual async Task<bool> DeleteAsync(Expression<Func<T, bool>> predicate, bool saveChanges = true)
         {
-            _dbSet.Remove(entity);
+            try
+            {
+                await _dbSet.Where(predicate).ExecuteDeleteAsync();
+
+                if (saveChanges)
+                {
+                    return await SaveChangesAsync();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
-        public virtual Task<int> DeleteAsync(Expression<Func<T, bool>> predicate)
+        public virtual async Task<bool> SaveChangesAsync()
         {
-            return _dbSet
-                .Where(predicate)
-                .ExecuteDeleteAsync();
-        }
-
-        public virtual async Task<int> SaveChangesAsync()
-        {
-            return await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }
