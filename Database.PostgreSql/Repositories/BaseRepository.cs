@@ -25,17 +25,6 @@ namespace Database.PostgreSql.Repositories
             return _dbSet.AsQueryable();
         }
 
-        public virtual IQueryable<T> ApplyPagination(IQueryable<T> query, int? page, int? pageSize)
-        {
-            if (page.HasValue && pageSize.HasValue && page > 0 && pageSize > 0)
-            {
-                int skip = (page.Value - 1) * pageSize.Value;
-                query = query.Skip(skip).Take(pageSize.Value);
-            }
-
-            return query;
-        }
-
 
         public virtual async Task<T?> GetByIdAsync(string id)
         {

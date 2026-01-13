@@ -9,8 +9,6 @@ namespace Database.PostgreSql.Repositories
 
         public IQueryable<T> WriteQuery();
 
-        public IQueryable<T> ApplyPagination(IQueryable<T> query, int? page, int? pageSize);
-
         public Task<T?> GetByIdAsync(string id);
 
         public Task<bool> AddAsync(T entity, bool saveChanges = true);
