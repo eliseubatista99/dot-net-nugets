@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Database.PostgreSql.Repositories
 {
@@ -20,10 +15,27 @@ namespace Database.PostgreSql.Repositories
             _dbSet = context.Set<T>();
         }
 
-        public virtual IQueryable<T> Query()
+        public virtual IQueryable<T> ReadQuery()
+        {
+            return _dbSet.AsNoTracking();
+        }
+
+        public virtual IQueryable<T> WriteQuery()
         {
             return _dbSet.AsQueryable();
         }
+
+        public virtual IQueryable<T> ApplyPagination(IQueryable<T> query, int? page, int? pageSize)
+        {
+            if (page.HasValue && pageSize.HasValue && page > 0 && pageSize > 0)
+            {
+                int skip = (page.Value - 1) * pageSize.Value;
+                query = query.Skip(skip).Take(pageSize.Value);
+            }
+
+            return query;
+        }
+
 
         public virtual async Task<T?> GetByIdAsync(string id)
         {
@@ -43,7 +55,7 @@ namespace Database.PostgreSql.Repositories
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -62,7 +74,7 @@ namespace Database.PostgreSql.Repositories
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -83,7 +95,7 @@ namespace Database.PostgreSql.Repositories
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -102,7 +114,7 @@ namespace Database.PostgreSql.Repositories
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -115,7 +127,7 @@ namespace Database.PostgreSql.Repositories
                 await _context.SaveChangesAsync();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

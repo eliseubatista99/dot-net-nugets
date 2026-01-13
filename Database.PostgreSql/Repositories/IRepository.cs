@@ -1,16 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore.Query;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Database.PostgreSql.Repositories
 {
     public interface IRepository<T> where T : class
     {
-        public IQueryable<T> Query(); // To build queries
+        public IQueryable<T> ReadQuery();
+
+        public IQueryable<T> WriteQuery();
+
+        public IQueryable<T> ApplyPagination(IQueryable<T> query, int? page, int? pageSize);
 
         public Task<T?> GetByIdAsync(string id);
 
