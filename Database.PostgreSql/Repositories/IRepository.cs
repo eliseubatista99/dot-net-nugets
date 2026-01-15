@@ -13,6 +13,8 @@ namespace Database.PostgreSql.Repositories
 
         public Task<bool> AddAsync(T entity, bool saveChanges = true);
 
+        public Task<bool> AddRangeAsync(IEnumerable<T> entities, bool saveChanges = true);
+
         public Task<bool> UpdateAsync(T entity, bool saveChanges = true);
 
         public Task<bool> UpdateAsync(Expression<Func<T, bool>> filter, Expression<Func<SetPropertyCalls<T>, SetPropertyCalls<T>>> set, bool saveChanges = true);

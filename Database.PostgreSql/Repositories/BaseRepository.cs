@@ -50,6 +50,25 @@ namespace Database.PostgreSql.Repositories
             }
         }
 
+        public async Task<bool> AddRangeAsync(IEnumerable<T> entities, bool saveChanges = true)
+        {
+            try
+            {
+                await _dbSet.AddRangeAsync(entities);
+
+                if (saveChanges)
+                {
+                    return await SaveChangesAsync();
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public virtual async Task<bool> UpdateAsync(T entity, bool saveChanges = true)
         {
             try
