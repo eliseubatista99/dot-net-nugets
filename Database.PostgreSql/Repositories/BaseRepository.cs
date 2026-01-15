@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
 namespace Database.PostgreSql.Repositories
@@ -44,8 +43,9 @@ namespace Database.PostgreSql.Repositories
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.Error.WriteLine($"Exception in AddAsync: {e.Message}\nStackTrace: {e.StackTrace}");
                 return false;
             }
         }
@@ -63,8 +63,10 @@ namespace Database.PostgreSql.Repositories
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.Error.WriteLine($"Exception in AddRangeAsync: {e.Message}\nStackTrace: {e.StackTrace}");
+
                 return false;
             }
         }
@@ -82,29 +84,41 @@ namespace Database.PostgreSql.Repositories
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.Error.WriteLine($"Exception in UpdateAsync: {e.Message}\nStackTrace: {e.StackTrace}");
+
                 return false;
             }
         }
 
-        public async Task<bool> UpdateAsync(Expression<Func<T, bool>> filter, Expression<Func<SetPropertyCalls<T>, SetPropertyCalls<T>>> set, bool saveChanges = true)
+        public async Task<bool> UpdateAsync(Expression<Func<T, bool>> filter, Action<T> updateAction, bool saveChanges = true)
         {
             try
             {
-                await _dbSet
-                    .Where(filter)
-                    .ExecuteUpdateAsync(set);
+                var entities = await _dbSet.Where(filter).ToListAsync();
+
+                if (!entities.Any())
+                {
+                    return false;
+                }
+
+                // Run update action for each entity
+                foreach (var entity in entities)
+                {
+                    updateAction(entity);
+                }
 
                 if (saveChanges)
                 {
-                    return await SaveChangesAsync();
+                    await _context.SaveChangesAsync();
                 }
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.Error.WriteLine($"Exception in UpdateAsync: {e.Message}\nStackTrace: {e.StackTrace}");
                 return false;
             }
         }
@@ -122,8 +136,10 @@ namespace Database.PostgreSql.Repositories
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.Error.WriteLine($"Exception in DeleteAsync: {e.Message}\nStackTrace: {e.StackTrace}");
+
                 return false;
             }
         }
@@ -135,8 +151,10 @@ namespace Database.PostgreSql.Repositories
                 await _context.SaveChangesAsync();
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.Error.WriteLine($"Exception in SaveChangesAsync: {e.Message}\nStackTrace: {e.StackTrace}");
+
                 return false;
             }
         }

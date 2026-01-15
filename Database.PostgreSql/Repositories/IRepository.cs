@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace Database.PostgreSql.Repositories
 {
@@ -17,7 +16,7 @@ namespace Database.PostgreSql.Repositories
 
         public Task<bool> UpdateAsync(T entity, bool saveChanges = true);
 
-        public Task<bool> UpdateAsync(Expression<Func<T, bool>> filter, Expression<Func<SetPropertyCalls<T>, SetPropertyCalls<T>>> set, bool saveChanges = true);
+        public Task<bool> UpdateAsync(Expression<Func<T, bool>> filter, Action<T> updateAction, bool saveChanges = true);
 
         public Task<bool> DeleteAsync(Expression<Func<T, bool>> predicate, bool saveChanges = true);
 

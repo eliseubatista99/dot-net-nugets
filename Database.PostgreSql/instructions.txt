@@ -1,3 +1,0 @@
-Push to nuget
-
-dotnet nuget push database-postgresql.0.0.7.nupkg --api-key apiKey --source https://api.nuget.org/v3/index.json
