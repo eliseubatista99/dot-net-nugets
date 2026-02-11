@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<Version>0.0.25</Version>
+		<Version>0.0.1</Version>
 		<IsPackable>true</IsPackable>
 		<TargetFramework>net9.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<PackageId>database-postgresql</PackageId>
-		<Title>Database - PostgreSql</Title>
+		<PackageId>eliseubatista99-dotnet-nugets-database-postgresql</PackageId>
+		<Title>EliseuBatista99.Database.PostgreSql</Title>
 		<Authors>eliseubatista99</Authors>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

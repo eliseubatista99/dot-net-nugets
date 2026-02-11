@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="Core/Core.csproj" Id="33a3a38f-abf6-49f8-b9c9-ffba766c943e" />
   <Project Path="Database.PostgreSql/Database.PostgreSql.csproj" />
 </Solution>
