@@ -35,6 +35,8 @@ namespace EliseuBatista99.Core
         {
             if (Builder != null)
             {
+                Builder.Services.AddHttpContextAccessor();
+
                 Builder.Services.AddScoped<IExecutionContext, ExecutionContext>();
             }
 

@@ -76,9 +76,20 @@ namespace EliseuBatista99.Core.Operations
             return Task.CompletedTask;
         }
 
+        //public async Task<OperationResponseDto<TOutput>> Execute()
+        //{
+
+        //}
+
         public async Task<OperationResponseDto<TOutput>> Execute()
         {
             LogOperationExecution();
+
+            var usr = this.ExecutionContext.GetService<IHttpContextAccessor>()?.HttpContext?.User;
+            if (usr != null)
+            {
+                SetUser(usr);
+            }
 
             SetStatusCode(StatusCodes.Status200OK);
             await HandleExecution();
@@ -97,29 +108,11 @@ namespace EliseuBatista99.Core.Operations
             return output;
         }
 
-        public async Task<TResponse> Execute<TResponse>(System.Security.Claims.ClaimsPrincipal? User)
-            where TResponse : OperationResponseDto<TOutput>, new()
-        {
-            if (User != null)
-            {
-                SetUser(User);
-            }
-
-            var res = await Execute();
-
-            return new TResponse
-            {
-                Data = res.Data,
-                Metadata = res.Metadata,
-            };
-        }
-
-        public Task<TResponse> Execute<TResponse>(TInput _input, System.Security.Claims.ClaimsPrincipal? User)
-            where TResponse : OperationResponseDto<TOutput>, new()
+        public Task<OperationResponseDto<TOutput>> Execute(TInput _input)
         {
             this.input = _input;
 
-            return Execute<TResponse>(User);
+            return Execute();
         }
     }
 }
