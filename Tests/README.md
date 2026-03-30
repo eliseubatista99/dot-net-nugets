@@ -9,13 +9,11 @@ It provides:
 - `HttpContextMock`: an `IHttpContextAccessor` mock that allows setting the current user (`ClaimsPrincipal`)
 - `OperationTestBase`: a base class to set up the `ExecutionContext` for unit tests
 
-Target framework: `net9.0` (NuGet ID: `eliseubatista99-dotnet-nugets-tests`, version `0.0.1`).
-
 ## NuGet Packages
 
-| Package | Latest Version | About |
-| :------ | :-------------- | :---- |
-| `eliseubatista99-dotnet-nugets-tests` | `0.0.1` | Test helpers: builders, mocks, and a base class for operation unit tests |
+| Package                               | Latest Version | About                                                                    |
+| :------------------------------------ | :------------- | :----------------------------------------------------------------------- |
+| `eliseubatista99-dotnet-nugets-tests` | `1.0.0`        | Test helpers: builders, mocks, and a base class for operation unit tests |
 
 ## Documentation
 
@@ -132,4 +130,3 @@ This is important because `OperationBase` reads `HttpContext.User` (when availab
 
 - This package targets `net9.0` and includes `Moq`, and `xunit` packages only as dependencies for your test projects.
 - The exact services you can mock depend on what your `OperationBase` implementations resolve from `IExecutionContext`.
-
