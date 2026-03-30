@@ -7,13 +7,11 @@
 - Pagination query helper (`ExecutePaginatedRead`)
 - Utility helpers to convert `byte[]` images into Base64 data URIs
 
-Target framework: `net9.0` (NuGet ID: `eliseubatista99-dotnet-nugets-database-postgresql`, version `0.0.2`).
-
 ## NuGet Packages
 
 | Package                                             | Latest Version | About                                                                            |
 | :-------------------------------------------------- | :------------- | :------------------------------------------------------------------------------- |
-| `eliseubatista99-dotnet-nugets-database-postgresql` | `0.0.2`        | PostgreSQL EF Core DI helper, generic repository, pagination, byte/image helpers |
+| `eliseubatista99-dotnet-nugets-database-postgresql` | `1.0.0`        | PostgreSQL EF Core DI helper, generic repository, pagination, byte/image helpers |
 
 ## Documentation
 
