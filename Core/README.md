@@ -2,13 +2,11 @@
 
 `EliseuBatista99.Core` is a small set of ASP.NET Core building blocks designed to standardize application startup, a consistent "operation" pattern, common DTO conventions, and JWT-related helper utilities.
 
-Target framework: `net9.0` (NuGet ID: `eliseubatista99-dotnet-nugets-core`, version `0.0.5`).
-
 ## NuGet Packages
 
 | Package                              | Latest Version | About                                                                                          |
 | :----------------------------------- | :------------- | :--------------------------------------------------------------------------------------------- |
-| `eliseubatista99-dotnet-nugets-core` | `0.0.5`        | Core abstractions (startup builder, operation base, DTOs, JWT helpers, Swagger schema filters) |
+| `eliseubatista99-dotnet-nugets-core` | `1.0.0`        | Core abstractions (startup builder, operation base, DTOs, JWT helpers, Swagger schema filters) |
 
 ## Documentation
 
