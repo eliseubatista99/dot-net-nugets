@@ -1,0 +1,3 @@
+.\pushCoreNuget.ps1 -ApiKey ApiKey -Version 1.0.0
+.\pushDatabasePostgreSqlNuget.ps1 -ApiKey ApiKey -Version 1.0.0
+.\pushTestsNuget.ps1 -ApiKey ApiKey -Version 1.0.0

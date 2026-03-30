@@ -1,20 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<Version>0.0.6</Version>
+		<Version>0.0.2</Version>
 		<IsPackable>true</IsPackable>
 		<TargetFramework>net9.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<PackageId>database-postgresql</PackageId>
-		<Title>Database - PostgreSql</Title>
+		<PackageId>eliseubatista99-dotnet-nugets-database-postgresql</PackageId>
+		<Title>EliseuBatista99.Database.PostgreSql</Title>
 		<Authors>eliseubatista99</Authors>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
-		<PackageReference Include="Npgsql" Version="9.0.3" />
+		<PackageReference Include="eliseubatista99-dotnet-nugets-core" Version="0.0.5" />
+		<PackageReference Include="EFCore.NamingConventions" Version="9.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.14" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.14">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.14" />
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.0" />
+		<PackageReference Include="Npgsql" Version="9.0.5" />
 		<None Include="README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 </Project>
