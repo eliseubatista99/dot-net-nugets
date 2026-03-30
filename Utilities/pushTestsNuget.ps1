@@ -6,7 +6,8 @@ param (
     [string]$ApiKey
 )
 
-$releasePath = Join-Path $PSScriptRoot "../bin/Release"
+$originalPath = $PSScriptRoot
+$releasePath = Join-Path $PSScriptRoot "../Tests/bin/Release"
 
 if (-not (Test-Path $releasePath)) {
     Write-Error "Bin folder not found."
@@ -15,7 +16,7 @@ if (-not (Test-Path $releasePath)) {
 
 Set-Location $releasePath
 
-$packageName = "database-postgresql.$Version.nupkg"
+$packageName = "eliseubatista99-dotnet-nugets-tests.$Version.nupkg"
 
 if (-not (Test-Path $packageName)) {
     Write-Error "Package $packageName not found."
@@ -25,3 +26,5 @@ if (-not (Test-Path $packageName)) {
 dotnet nuget push $packageName `
     --api-key $ApiKey `
     --source https://api.nuget.org/v3/index.json
+
+Set-Location $originalPath
